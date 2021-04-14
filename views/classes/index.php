@@ -12,12 +12,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="classes-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Create Classes', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-
+    <?php if(!Yii::$app->user->isGuest):?>
+        <p>
+            <?= Html::a('Create Classes', ['create'], ['class' => 'btn btn-success']) ?>
+        </p>
+    <?php endif;?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
@@ -26,7 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {update} {delete}',
+                'visible' => !Yii::$app->user->isGuest,
+            ],
         ],
     ]); ?>
 

@@ -36,18 +36,5 @@ class m210414_073941_teachers extends Migration
         $this->dropTable('teachers');
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
 
-    }
-
-    public function down()
-    {
-        echo "m210414_073941_teachers cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

@@ -139,5 +139,4 @@ class Schedule extends \yii\db\ActiveRecord
         return false;
     }
 
-
 }

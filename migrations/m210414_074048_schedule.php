@@ -30,18 +30,4 @@ class m210414_074048_schedule extends Migration
         $this->dropTable('schedule');
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m210414_074048_schedule cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

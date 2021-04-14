@@ -30,6 +30,7 @@ class Teachers extends \yii\db\ActiveRecord
     {
         return [
             [['first_name', 'last_name'], 'string', 'max' => 100],
+            [['first_name', 'last_name'], 'required'],
         ];
     }
 

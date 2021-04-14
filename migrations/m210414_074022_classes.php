@@ -36,18 +36,4 @@ class m210414_074022_classes extends Migration
         $this->dropTable('classes');
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m210414_074022_classes cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

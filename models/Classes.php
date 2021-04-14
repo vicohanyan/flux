@@ -29,6 +29,7 @@ class Classes extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'string', 'max' => 100],
+            [['name'], 'required'],
         ];
     }
 
