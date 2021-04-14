@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use phpDocumentor\Reflection\Type;
+use PHPUnit\Framework\MockObject\Builder\Identity;
 use yii\base\InvalidArgumentException;
 use yii\base\NotSupportedException;
 use yii\db\ActiveRecord;
@@ -23,6 +25,7 @@ class User extends ActiveRecord implements IdentityInterface
     public $password;
     public $authKey;
     public $accessToken;
+    public $type;
 
 
     /**
@@ -30,7 +33,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function tableName()
     {
-        return 'admins';
+        return 'users';
     }
 
     /**
@@ -40,6 +43,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             [['username', 'password', 'auth_key', 'access_token'], 'string', 'max' => 64],
+            [['type'], 'string', 'max' => 32],
             [['password'], 'password', 'max' => 64],
         ];
     }
@@ -55,6 +59,7 @@ class User extends ActiveRecord implements IdentityInterface
             'password' => 'Password',
             'auth_key' => 'Authorization Token',
             'access_token' => 'Access Token',
+            'type' => 'Type',
         ];
     }
 
@@ -85,38 +90,9 @@ class User extends ActiveRecord implements IdentityInterface
         return static::findOne(['username' => $username]);
     }
 
-    /**
-     * Finds user by password reset token
-     *
-     * @param string $token password reset token
-     * @return static|null
-     */
-    public static function findByPasswordResetToken($token)
-    {
-        if (!static::isPasswordResetTokenValid($token)) {
-            return null;
-        }
 
-        return static::findOne([
-            'password_reset_token' => $token,
-        ]);
-    }
-
-    /**
-     * Finds out if password reset token is valid
-     *
-     * @param string $token password reset token
-     * @return bool
-     */
-    public static function isPasswordResetTokenValid($token)
-    {
-        if (empty($token)) {
-            return false;
-        }
-
-        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
-        $expire = \Yii::$app->params['user.passwordResetTokenExpire'];
-        return $timestamp + $expire >= time();
+    public function getType():string {
+        $this->type;
     }
 
     /**
@@ -161,6 +137,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->auth_key = \Yii::$app->security->generateRandomString();
     }
+
 
     private function checkPassword($password, $hash)
     {

@@ -14,6 +14,9 @@ use app\models\LoginForm;
 
 class SiteController extends Controller
 {
+
+
+
     /**
      * {@inheritdoc}
      */
@@ -73,7 +76,6 @@ class SiteController extends Controller
         ]);
     }
 
-
     /**
      * Login action.
      *
@@ -81,6 +83,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }

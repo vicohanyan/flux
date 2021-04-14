@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Class m210414_073724_admins
+ * Class m210414_073724_users
  */
-class m210414_073724_admins extends Migration
+class m210414_073724_users extends Migration
 {
 
     /**
@@ -13,7 +13,7 @@ class m210414_073724_admins extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('admins', [
+        $this->createTable('users', [
             'id'           => $this->primaryKey(),
             'username'     => $this->string(64)->unique(),
             'password'     => $this->string(64),
@@ -21,7 +21,7 @@ class m210414_073724_admins extends Migration
             'access_token' => $this->string(32),
             'type'         => $this->string(32),
         ]);
-        $this->batchInsert("admins",
+        $this->batchInsert("users",
             [
                 'username','password','auth_key','access_token','type'
             ],
@@ -31,12 +31,13 @@ class m210414_073724_admins extends Migration
             ]
         );
     }
+
     /**
      * {@inheritdoc}
      */
     public function safeDown()
     {
-        $this->dropTable('admins');
+        $this->dropTable('users');
     }
 
 }
