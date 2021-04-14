@@ -2,13 +2,15 @@
 
 namespace app\controllers;
 
+use app\models\Classes;
+use app\models\Teachers;
+use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
-use app\models\ContactForm;
 
 class SiteController extends Controller
 {
@@ -38,6 +40,8 @@ class SiteController extends Controller
         ];
     }
 
+
+
     /**
      * {@inheritdoc}
      */
@@ -61,13 +65,19 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $classes = Classes::find()->all();
+        $teachers = Teachers::find()->all();
+        return $this->render('index', [
+            'classes' => $classes,
+            'teachers' => $teachers,
+        ]);
     }
+
 
     /**
      * Login action.
      *
-     * @return Response|string
+     * @return string
      */
     public function actionLogin()
     {
@@ -78,12 +88,13 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
-        }
+        } else {
+            $model->password = '';
 
-        $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -98,31 +109,5 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
 
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
 }
