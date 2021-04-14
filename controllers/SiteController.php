@@ -15,8 +15,6 @@ use app\models\LoginForm;
 class SiteController extends Controller
 {
 
-
-
     /**
      * {@inheritdoc}
      */
